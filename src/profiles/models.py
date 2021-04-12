@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from . utils import get_random_code
 from  django.template.defaultfilters import slugify
 
+
 # Create your models here.
 
 
@@ -22,7 +23,7 @@ class  Profiles(models.Model):
     create_on  =     models.DateTimeField(auto_now=True )
     
     def __str__(self):
-        return f"{self.user.username}-{self.create_on}"
+        return f"{self.user.username}-{self.create_on.strftime('%d-%m-%y')}"
     
     
     def save(self, *args, **kwargs):
@@ -37,3 +38,22 @@ class  Profiles(models.Model):
             to_slug = str(self.user)
         self.slug = to_slug
         super().save(*args, **kwargs)
+        
+  
+        
+
+
+STATUS_CHOICES = (
+    ('send', 'send'),
+    ('accepted', 'accepted'),
+    ('rejected','rejected')
+    )
+class  Relationship(models.Model):
+    sender     =     models.ForeignKey(Profiles, on_delete=models.CASCADE, related_name='sender')
+    receiver   =     models.ForeignKey(Profiles, on_delete=models.CASCADE, related_name='receiver')
+    status     =     models.CharField(max_length=8, choices=STATUS_CHOICES)
+    update_on  =     models.DateTimeField(auto_now=True )
+    create_on  =     models.DateTimeField(auto_now=True )
+    
+    def __str__(self):
+        return f"{self.sender}-{self.receiver}-{self.status}"
