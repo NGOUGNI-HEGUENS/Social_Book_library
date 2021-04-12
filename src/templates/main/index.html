@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+<!-- title blog -->
+{% block title %} Home {% endblock %}
+
+<!-- content blog -->
+
+{% block content %}
+<h1>Hello Mr/Mrs</h1>
+<br> {{user}} {% endblock content %}
+
+<!-- script -->
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        console.log('working')
+    })
+</script>
+{% endblock scripts %}
